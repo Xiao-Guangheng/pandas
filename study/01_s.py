@@ -71,3 +71,6 @@ print("最高分:", s.max())         # 92
 print("最高分是谁:", s.idxmax())   # '李四'  <- ndarray 没有的能力！
 print("最低分位置:", s.idxmin())   # '王五'
 
+s_nan = pd.Series([1, np.nan, 3])
+print("\n含 NaN 的求和:", s_nan.sum())    # 4.0，不是 NaN
+print("含 NaN 的个数:", s_nan.count())    # 2  （count 只数非缺失的）
