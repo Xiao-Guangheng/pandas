@@ -1,0 +1,3 @@
+# 忽略 output 目录下的生成数据
+output/
+__pycache__/
