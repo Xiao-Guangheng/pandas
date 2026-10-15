@@ -92,9 +92,19 @@ print("\n删除行（index=）:")
 print(df.drop(index=[0, 2]))                # 按行标签删（这里标签就是 0~3）
 
 # 删除满足条件的行：先构造布尔掩码再取反
+# mask 是"语文<80"的布尔列：[False, False, True, False]
 mask = df["语文"] < 80
-print("\n删除语文<80 的行:")
+print("\nmask（语文<80 吗）:")
+print(mask)
+# ~ 是按位取反运算符，把 True/False 逐个翻转，相当于"不满足条件"：
+# ~mask = [True, True, False, True]，即"语文>=80"
+print("\n删除语文<80 的行（即保留 ~mask 为 True 的行）:")
 print(df[~mask])
+# ⚠️ 这里不能用 Python 的 not！not 只能判断单个布尔值，
+# 而 mask 是一整列（Series），会报错：
+#   df[not mask]  # ValueError: truth value of a Series is ambiguous
+# pandas 里逐元素逻辑运算统一用位运算符：~ 取反、& 且、| 或
+# 等价写法：df.query("语文 >= 80")
 
 # pop：取出列并从原表移除（像字典的 pop）
 df3 = df.copy()
@@ -134,7 +144,7 @@ print("6.6 修改值")
 df6 = df.copy()
 
 # 改单格（第 3 章的 at/loc/iloc 都行）
-df6.loc[1, "语文"] = 95
+df6.loc[1, "语文"] = 95 
 print(df6)
 
 # 改一整列（配合函数，第 7 章细讲 apply）
